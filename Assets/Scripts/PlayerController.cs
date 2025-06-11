@@ -10,11 +10,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float mouseSensitivity = 100f;
     [SerializeField] float gravity = -9.8f;
     [SerializeField] public Transform playerCamera;
+    [SerializeField] private float rotatinSpeed = 5f;
 
     private CharacterController playerController;
     private Vector3 velocity;
     private float xRotation = 0f;
-    
+
 
     void Start()
     {
@@ -23,6 +24,17 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
+    {
+        MovePlayer();
+
+    }
+
+    void FixedUpdate()
+    {
+        //MovePlayer();
+    }
+
+    void MovePlayer()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -48,6 +60,24 @@ public class PlayerController : MonoBehaviour
         }
         velocity.y += gravity * Time.deltaTime;
         playerController.Move(velocity * Time.deltaTime);
-        
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            StartCoroutine(RotatePlayer());
+        }
+    }
+
+    IEnumerator RotatePlayer()
+    {
+        float targetAngle = transform.eulerAngles.y + 180f;
+        float elapsedTime = 0f;
+        float duration = rotatinSpeed;
+
+        while (elapsedTime < duration)
+        {
+            transform.rotation = Quaternion.Euler(0f, Mathf.Lerp(transform.eulerAngles.y, targetAngle, elapsedTime / duration), 0f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
