@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO.Compression;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,10 +12,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float gravity = -9.8f;
     [SerializeField] public Transform playerCamera;
     [SerializeField] private float rotatinSpeed = 5f;
+    [SerializeField] private RawImage potionIcon;
+    [SerializeField] private RawImage bookIcon;
+
 
     private CharacterController playerController;
     private Vector3 velocity;
     private float xRotation = 0f;
+
+    // Itens
+    public bool hasPotion = false;
+    public bool hasBook = false;
 
 
     void Start()
@@ -26,6 +34,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        ShowIcons();
 
     }
 
@@ -80,4 +89,19 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
     }
+
+    void ShowIcons()
+    {
+        if (hasPotion)
+        {
+            potionIcon.gameObject.SetActive(true);
+        }
+
+        if (hasBook)
+        {
+            bookIcon.gameObject.SetActive(true);
+        }
+    }
+
+
 }
