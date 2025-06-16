@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
     public bool hasPotion = false;
     public bool hasBook = false;
 
+    // Steps
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private List<AudioClip> footstepsSounds;
+
 
     void Start()
     {
@@ -35,6 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         ShowIcons();
+        SoundOfSteps();
 
     }
 
@@ -101,6 +106,17 @@ public class PlayerController : MonoBehaviour
         {
             bookIcon.gameObject.SetActive(true);
         }
+    }
+
+    void SoundOfSteps()
+    {
+        Vector3 horizontalVelocity = new Vector3(playerController.velocity.x, 0, playerController.velocity.z);
+        if (horizontalVelocity.magnitude < 0.1f)
+        {
+            return;
+        }
+        int randomIndex = UnityEngine.Random.Range(0, footstepsSounds.Count);
+        audioSource.PlayOneShot(footstepsSounds[randomIndex]);
     }
 
 
