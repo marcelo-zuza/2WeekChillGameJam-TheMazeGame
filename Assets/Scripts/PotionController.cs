@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class PotionController : MonoBehaviour
 {
     [SerializeField] private Button getPotionButton;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip getItemFx;
     private PlayerController playerController;
     private bool playerInRange = false;
 
@@ -30,6 +32,10 @@ public class PotionController : MonoBehaviour
             else if (gameObject.tag == "Book")
             {
                 playerController.hasBook = true;
+            }
+            if (getItemFx != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(getItemFx);
             }
                 
                 

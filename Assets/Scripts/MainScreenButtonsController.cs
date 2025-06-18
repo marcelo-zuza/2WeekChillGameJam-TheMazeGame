@@ -17,7 +17,10 @@ public class MainScreenButtonsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            StartGame();
+        }
     }
 
     public void StartGame()

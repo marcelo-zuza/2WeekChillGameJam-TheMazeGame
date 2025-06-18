@@ -77,22 +77,26 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            StartCoroutine(RotatePlayer());
+            StartCoroutine(RotatePlayer(rotatinSpeed));
         }
     }
 
-    IEnumerator RotatePlayer()
+    IEnumerator RotatePlayer(float rotationSpeed) // O nome da variável 'duration' no seu código original não é muito clara para a ideia de 'speed'. Mudei o parâmetro para 'rotationSpeed'
     {
-        float targetAngle = transform.eulerAngles.y + 180f;
+        float startAngle = transform.eulerAngles.y; // Armazena o ângulo inicial
+        float targetAngle = startAngle + 180f;
         float elapsedTime = 0f;
-        float duration = rotatinSpeed;
 
-        while (elapsedTime < duration)
+        while (elapsedTime < 1f) // O 'elapsedTime' deve ir de 0 a 1 para o Lerp funcionar corretamente
         {
-            transform.rotation = Quaternion.Euler(0f, Mathf.Lerp(transform.eulerAngles.y, targetAngle, elapsedTime / duration), 0f);
-            elapsedTime += Time.deltaTime;
+            // Interpola entre o ângulo inicial e o ângulo alvo
+            transform.rotation = Quaternion.Euler(0f, Mathf.Lerp(startAngle, targetAngle, elapsedTime), 0f);
+            elapsedTime += Time.deltaTime * rotationSpeed; // Multiplica por 'rotationSpeed' para controlar a velocidade da rotação
             yield return null;
         }
+
+        // Garante que o jogador termine exatamente no ângulo alvo
+        transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
     }
 
     void ShowIcons()

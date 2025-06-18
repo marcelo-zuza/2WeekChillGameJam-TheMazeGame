@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PotController : MonoBehaviour
@@ -11,6 +12,8 @@ public class PotController : MonoBehaviour
     [SerializeField] private Button dontHaveBook;
     [SerializeField] private Button dontHavePotion;
     [SerializeField] private Button haveAllItems;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip haveAllItemsFx;
     void Start()
     {
         playerController = GameObject.FindObjectOfType<PlayerController>();
@@ -22,6 +25,14 @@ public class PotController : MonoBehaviour
         if (playerController.hasBook == true && playerController.hasPotion == true && playerInRange == true && Input.GetKeyDown(KeyCode.E))
         {
             print("ALL DONE");
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (haveAllItemsFx != null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(haveAllItemsFx);
+                }
+                SceneManager.LoadScene(2); 
+            }
         }
     }
 
@@ -44,7 +55,7 @@ public class PotController : MonoBehaviour
             }
             else if (playerController.hasBook == true && playerController.hasPotion == true)
             {
-                haveAllItems.gameObject.SetActive(true);
+                haveAllItems.gameObject.SetActive(true);   
             }
         }
     }

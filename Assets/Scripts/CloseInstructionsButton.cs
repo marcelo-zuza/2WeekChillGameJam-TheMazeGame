@@ -14,7 +14,10 @@ public class CloseInstructionsButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            CloseInstructions();
+        }
     }
     
         public void CloseInstructions()
